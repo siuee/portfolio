@@ -44,9 +44,10 @@ After that, every push to `main` deploys to production and every other branch ge
 | — | Hero | `hero/Hero.tsx` | seamless looping intro video (multiply-blended), outlined ghost name, voice that pauses off-screen |
 | 01 | About | `sections/About.tsx` | lanyard ID card: damped pendulum + idle sway, 3D flip (hover / tap / Enter) |
 | 02 | Skills | `sections/Skills.tsx` | periodic table, diagonal wave entrance, family filters, sticky inspector with brand logo pop |
-| 03 | Work | `sections/Work.tsx` | expanding accordion gallery, clip-path wipe on the illustrative UI |
-| 04 | Experience | `sections/Experience.tsx` | timeline spine drawn by scroll; stops light up as it reaches them |
-| 05 | Contact | `sections/Contact.tsx` | letters hop under the cursor, copy-email chip, spinning "say hello" badge |
+| 03 | Homelab | `sections/Homelab.tsx` | rack-style lab selector with LED units; panel shows resume homelab bullets and Tech chips |
+| 04 | Work | `sections/Work.tsx` | expanding accordion gallery, clip-path wipe on the illustrative UI |
+| 05 | Experience | `sections/Experience.tsx` | timeline spine drawn by scroll; stops light up as it reaches them |
+| 06 | Contact | `sections/Contact.tsx` | letters hop under the cursor, copy-email chip, spinning "say hello" badge |
 
 **Certifications** and **Achievements** are not built, because the resume lists neither. To add them, fill
 `CERTIFICATIONS` / `ACHIEVEMENTS` in `data.ts` from a resume that includes them, then add the sections and
@@ -65,7 +66,7 @@ nav links.
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install numpy pillow imageio-ffmpeg
-.venv/bin/python scripts/build-hero-assets.py ~/Downloads/intro.mp4
+.venv/bin/python scripts/build-hero-assets.py ~/Downloads/introduction.mp4
 # optional overrides:  --crop 570:714:354:0   --level 0.91
 ```
 

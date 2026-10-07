@@ -13,7 +13,7 @@ export default function Work() {
     <section id="work" className="section work" aria-labelledby="work-title" tabIndex={-1}>
       <div className="wrap">
         <div className="wk-head">
-          <SectionHeading id="work-title" index="03" label="Selected work" lines={["Things I've"]} accent="built." />
+          <SectionHeading id="work-title" index="04" label="Selected work" lines={["Things I've"]} accent="built." />
           <p className="wk-count rv">
             {String(PROJECTS.length).padStart(2, "0")} projects · from my resume
           </p>

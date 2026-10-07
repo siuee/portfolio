@@ -10,8 +10,8 @@ const current = EXPERIENCE.find((e) => e.end === "Present");
 const BACK_LINES = [
   PROFILE.roles.join(" · "),
   `${degree.title}, ${degree.place} · ${degree.year}`,
-  "AES/RSA encryption systems & file encryption tools",
-  "FIFA Tournament Manager · Nepal Import Analytics · OpenClaw AI Agent",
+  "SIEM/SOC telemetry (Wazuh, ELK, Splunk) · GOAD · YARA detection engineering",
+  "AES/RSA encryption · FIFA Tournament Manager · Nepal Import Analytics",
   "Published “Clef” on the Google Play Store",
 ];
 

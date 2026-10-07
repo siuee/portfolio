@@ -36,6 +36,10 @@ export default function Skills() {
   const skill = SKILLS.find((s) => s.id === activeId)!;
   const atomic = SKILLS.indexOf(skill) + 1;
   const uses = usesOf(skill.id);
+  const notes = skill.usedIn ?? [];
+  const homelab = uses.homelab.filter((h) => !notes.includes(h));
+  const projects = uses.projects.filter((p) => !notes.includes(p));
+  const hasUses = notes.length + homelab.length + projects.length + uses.roles.length > 0;
   const tint = brandColor(skill.logo);
 
   return (
@@ -105,13 +109,19 @@ export default function Skills() {
               {skill.family}
               {skill.listedUnder && <> · listed under “{skill.listedUnder}”</>}
             </p>
-            <div className="sk-insp-uses">
-              <p>Used in</p>
-              {uses.projects.length + uses.roles.length === 0 ? (
-                <span className="sk-none">Listed in my resume skills</span>
-              ) : (
+            {hasUses && (
+              <div className="sk-insp-uses">
+                <p>Used in</p>
                 <ul>
-                  {uses.projects.map((p) => (
+                  {notes.map((n) => (
+                    <li key={n}>{n}</li>
+                  ))}
+                  {homelab.map((h) => (
+                    <li key={h} className="is-lab">
+                      {h}
+                    </li>
+                  ))}
+                  {projects.map((p) => (
                     <li key={p}>{p}</li>
                   ))}
                   {uses.roles.map((r) => (
@@ -120,8 +130,8 @@ export default function Skills() {
                     </li>
                   ))}
                 </ul>
-              )}
-            </div>
+              </div>
+            )}
           </aside>
         </div>
       </div>
@@ -165,10 +175,9 @@ export default function Skills() {
         .sk-insp-uses ul{list-style:none;margin:8px 0 0;padding:0}
         .sk-insp-uses li{position:relative;padding:5px 0 5px 16px;font-size:13.5px;line-height:1.35}
         .sk-insp-uses li::before{content:"";position:absolute;left:0;top:11px;width:7px;height:7px;border-radius:50%;background:var(--ink)}
+        .sk-insp-uses li.is-lab::before{background:var(--ink);border-radius:2px;width:7px;height:7px;top:10px}
         .sk-insp-uses li.is-role{color:var(--mute)}
         .sk-insp-uses li.is-role::before{background:none;box-shadow:inset 0 0 0 1.5px var(--faint)}
-        .sk-none{display:block;margin-top:8px;font-size:13.5px;color:var(--mute)}
-
         @media (max-width: 1023px){
           .sk-layout{grid-template-columns:minmax(0,1fr)}
           .sk-insp{position:relative;top:auto}

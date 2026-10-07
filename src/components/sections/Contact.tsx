@@ -55,7 +55,7 @@ export default function Contact() {
     <section id="contact" className="section contact" aria-labelledby="contact-title" tabIndex={-1}>
       <div className="wrap">
         <p className="tag rv">
-          <b>05</b>
+          <b>06</b>
           <span aria-hidden="true">—</span>Contact
         </p>
 

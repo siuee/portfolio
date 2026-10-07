@@ -3,6 +3,7 @@ import Navigation from "./Navigation";
 import Hero from "./hero/Hero";
 import About from "./sections/About";
 import Skills from "./sections/Skills";
+import Homelab from "./sections/Homelab";
 import Work from "./sections/Work";
 import Experience from "./sections/Experience";
 import Contact from "./sections/Contact";
@@ -11,7 +12,7 @@ import RevealObserver from "./ui/RevealObserver";
 import { SmoothScroll } from "@/lib/scroll";
 
 /**
- * Section order: Hero → About → Skills → Work → Experience → Contact.
+ * Section order: Hero → About → Skills → Homelab → Work → Experience → Contact.
  * Certifications and Achievements are omitted: the resume lists none.
  * Each section sits in its own Suspense boundary so React hydrates them as
  * separate tasks instead of one long main-thread block.
@@ -27,7 +28,7 @@ export default function App() {
       <Navigation />
       <main id="main" tabIndex={-1}>
         <Hero />
-        {[About, Skills, Work, Experience, Contact].map((Section, i) => (
+        {[About, Skills, Homelab, Work, Experience, Contact].map((Section, i) => (
           <Suspense key={i}>
             <Section />
           </Suspense>

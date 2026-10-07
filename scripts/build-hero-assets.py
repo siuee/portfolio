@@ -227,7 +227,7 @@ def stills(frame: np.ndarray, bbox, level: float) -> None:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("src", nargs="?", default=str(Path.home() / "Downloads" / "intro.mp4"))
+    ap.add_argument("src", nargs="?", default=str(Path.home() / "Downloads" / "introduction.mp4"))
     ap.add_argument("--crop", help="override auto-detected crop, e.g. 800:1000:560:80")
     ap.add_argument("--level", type=float, help="override colorlevels imax (default: measured, max 0.98)")
     args = ap.parse_args()

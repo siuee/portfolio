@@ -63,7 +63,7 @@ export default function Experience() {
   return (
     <section id="experience" className="section experience" aria-labelledby="experience-title" tabIndex={-1}>
       <div className="wrap">
-        <SectionHeading id="experience-title" index="04" label="Experience & education" lines={["Education and", "experience, one"]} accent="path." />
+        <SectionHeading id="experience-title" index="05" label="Experience & education" lines={["Education and", "experience, one"]} accent="path." />
 
         <div ref={list} className="tl">
           <span className="tl-spine" aria-hidden="true">

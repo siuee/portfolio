@@ -28,9 +28,9 @@ const mono = localFont({
   display: "swap",
 });
 
-const title = `${PROFILE.name} — ${PROFILE.role}`;
+const title = `${PROFILE.name} Portfolio`;
 const description =
-  "Cybersecurity-trained full-stack software engineer with hands-on experience building secure, scalable systems end-to-end from architecture through deployment.";
+  "Cybersecurity-trained full-stack software engineer with a personal security homelab (SIEM/SOC, Active Directory, malware analysis) and experience building secure systems end-to-end from architecture through deployment.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(

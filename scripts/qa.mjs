@@ -89,7 +89,7 @@ for (const vp of [
   check(`${vp.name}: video resumes on return`, resumed);
 
   // sections
-  for (const id of ["about", "skills", "work", "experience", "contact"]) {
+  for (const id of ["about", "skills", "homelab", "work", "experience", "contact"]) {
     await page.evaluate((id) => {
       const el = document.getElementById(id);
       window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 40);

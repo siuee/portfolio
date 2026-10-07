@@ -137,6 +137,148 @@ const CONCEPT: Record<string, ReactNode> = {
       <path d="M8 24h32M10 16h28M10 32h28" />
     </>
   ),
+  virtualization: (
+    <>
+      <rect x="10" y="14" width="28" height="20" rx="3" />
+      <path d="M10 22h28M18 14v20M30 14v20" />
+    </>
+  ),
+  siem: (
+    <>
+      <rect x="8" y="10" width="32" height="28" rx="4" />
+      <path d="M14 28h8M14 22h14M26 28h8" />
+      <circle cx="34" cy="16" r="3" />
+    </>
+  ),
+  soc: (
+    <>
+      <circle cx="24" cy="24" r="14" />
+      <path d="M24 14v6M24 28v6M14 24h6M28 24h6" />
+      <circle cx="24" cy="24" r="4" />
+    </>
+  ),
+  logs: (
+    <>
+      <path d="M12 8h24v32H12z" />
+      <path d="M16 16h16M16 22h12M16 28h16M16 34h10" />
+    </>
+  ),
+  detection: (
+    <>
+      <path d="M8 32L18 20l8 8 14-16" />
+      <circle cx="36" cy="12" r="4" />
+    </>
+  ),
+  mitre: (
+    <>
+      <path d="M24 6l16 28H8z" />
+      <path d="M16 26h16M20 20h8" />
+    </>
+  ),
+  malware: (
+    <>
+      <circle cx="24" cy="20" r="8" />
+      <path d="M12 36c4-6 8-8 12-8s8 2 12 8" />
+      <path d="M18 14l-4-4M30 14l4-4" />
+    </>
+  ),
+  yara: (
+    <>
+      <path d="M10 34l8-20 6 12 6-8 8 16" />
+      <path d="M8 38h32" />
+    </>
+  ),
+  activedirectory: (
+    <>
+      <rect x="14" y="8" width="20" height="32" rx="3" />
+      <path d="M18 16h12M18 24h12M18 32h8" />
+    </>
+  ),
+  wazuh: (
+    <>
+      <path d="M24 8c-8 0-12 6-12 14v12h24V22c0-8-4-14-12-14z" />
+      <path d="M18 28h12" />
+    </>
+  ),
+  elasticsearch: (
+    <>
+      <ellipse cx="24" cy="14" rx="14" ry="6" />
+      <path d="M10 14v20c0 3.3 6.3 6 14 6s14-2.7 14-6V14" />
+    </>
+  ),
+  logstash: (
+    <>
+      <path d="M8 24h32M20 12l-4 12 4 12M28 12l4 12-4 12" />
+    </>
+  ),
+  kibana: (
+    <>
+      <path d="M8 36l12-24 8 12 12-20" />
+    </>
+  ),
+  splunk: (
+    <>
+      <path d="M14 8v32M34 8v32M14 24h20" />
+      <circle cx="14" cy="16" r="4" />
+      <circle cx="34" cy="32" r="4" />
+    </>
+  ),
+  sysmon: (
+    <>
+      <rect x="12" y="12" width="24" height="24" rx="4" />
+      <path d="M18 24h12M24 18v12" />
+    </>
+  ),
+  goad: (
+    <>
+      <path d="M12 10h24v28H12z" />
+      <path d="M18 18h5v5h-5zM25 25h5v5h-5z" />
+    </>
+  ),
+  windowsserver: (
+    <>
+      <rect x="10" y="10" width="28" height="28" rx="2" />
+      <path d="M10 22h28M22 10v28" />
+    </>
+  ),
+  kerberos: (
+    <>
+      <circle cx="24" cy="18" r="8" />
+      <path d="M12 38c3-8 8-12 12-12s9 4 12 12" />
+      <path d="M20 14l-3-4M28 14l3-4" />
+    </>
+  ),
+  bloodhound: (
+    <>
+      <circle cx="20" cy="28" r="6" />
+      <path d="M26 22l10-8M30 18l6 2-2 6" />
+    </>
+  ),
+  impacket: (
+    <>
+      <path d="M12 12h24v24H12z" />
+      <path d="M18 18h12v12H18z" />
+      <path d="M24 12v24M12 24h24" />
+    </>
+  ),
+  pefile: (
+    <>
+      <path d="M14 8h14l8 8v24H14z" />
+      <path d="M28 8v8h8M18 24h12M18 30h8" />
+    </>
+  ),
+  flare: (
+    <>
+      <path d="M24 6l4 14h14l-11 8 4 14-11-8-11 8 4-14-11-8h14z" />
+    </>
+  ),
+  remnux: (
+    <>
+      <rect x="10" y="14" width="28" height="22" rx="4" />
+      <path d="M16 22h16M16 28h10" />
+      <circle cx="34" cy="12" r="3" />
+    </>
+  ),
 };
 
 export function isBrand(key: string): boolean {
