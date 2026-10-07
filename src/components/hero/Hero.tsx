@@ -8,8 +8,9 @@ const UNLOCK_EVENTS = ["pointerdown", "keydown", "touchend"] as const;
 export default function Hero() {
   const section = useRef<HTMLElement>(null);
   const video = useRef<HTMLVideoElement>(null);
-  const soundBtn = useRef<HTMLButtonElement>(null);
-  const [soundOn, setSoundOn] = useState(false);
+  const controls = useRef<HTMLDivElement>(null);
+  const [muted, setMuted] = useState(false);
+  const [paused, setPaused] = useState(false);
   const [blocked, setBlocked] = useState(false);
   const visible = useRef(true);
   const userPaused = useRef(false);
@@ -21,7 +22,7 @@ export default function Hero() {
       // unmuted playback refused: fall back to muted so the picture keeps moving
       if (!v.muted) {
         v.muted = true;
-        setSoundOn(false);
+        setMuted(true);
         setBlocked(true);
         v.play().catch(() => {});
       }
@@ -36,9 +37,9 @@ export default function Hero() {
 
     const unlock = (e: Event) => {
       cleanup();
-      if (userPaused.current || soundBtn.current?.contains(e.target as Node)) return;
+      if (userPaused.current || controls.current?.contains(e.target as Node)) return;
       v.muted = false;
-      setSoundOn(true);
+      setMuted(false);
       setBlocked(false);
       play();
     };
@@ -51,12 +52,12 @@ export default function Hero() {
     v.muted = false;
     v.play()
       .then(() => {
-        setSoundOn(true);
+        setMuted(false);
         cleanup();
       })
       .catch(() => {
         v.muted = true;
-        setSoundOn(false);
+        setMuted(true);
         setBlocked(true);
         v.play().catch(() => {});
         UNLOCK_EVENTS.forEach((ev) => window.addEventListener(ev, unlock, { capture: true, passive: true }));
@@ -82,19 +83,35 @@ export default function Hero() {
     return () => io.disconnect();
   }, [play]);
 
-  const toggleSound = () => {
+  const turnSoundOn = () => {
     const v = video.current;
     if (!v) return;
-    if (soundOn) {
+    v.muted = false;
+    userPaused.current = false;
+    setMuted(false);
+    setPaused(false);
+    setBlocked(false);
+    play();
+  };
+
+  const toggleMute = () => {
+    const v = video.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    setMuted(v.muted);
+  };
+
+  const togglePlay = () => {
+    const v = video.current;
+    if (!v) return;
+    if (paused) {
+      userPaused.current = false;
+      setPaused(false);
+      play();
+    } else {
       v.pause();
       userPaused.current = true;
-      setSoundOn(false);
-    } else {
-      v.muted = false;
-      userPaused.current = false;
-      setSoundOn(true);
-      setBlocked(false);
-      play();
+      setPaused(true);
     }
   };
 
@@ -165,25 +182,53 @@ export default function Hero() {
               </li>
             ))}
           </ul>
-          <button
-            ref={soundBtn}
-            type="button"
-            className={`hero-sound ${blocked ? "is-blocked" : ""}`}
-            aria-label={soundOn ? "Pause intro video" : "Play intro video with sound"}
-            aria-pressed={soundOn}
-            onClick={toggleSound}
-          >
-            {soundOn ? (
-              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                <rect x="3" y="2.5" width="3.2" height="11" rx="1" fill="currentColor" />
-                <rect x="9.8" y="2.5" width="3.2" height="11" rx="1" fill="currentColor" />
-              </svg>
+          <div ref={controls} className="hero-ctrl">
+            {blocked ? (
+              <button type="button" className="hero-btn hero-tap" aria-label="Turn on intro video sound" onClick={turnSoundOn}>
+                <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+                  <path d="M2 6h2.6L8 3v10L4.6 10H2z" fill="currentColor" />
+                  <path d="M10.5 6l3.5 4M14 6l-3.5 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+                </svg>
+                <span aria-hidden="true">Tap for sound</span>
+              </button>
             ) : (
-              <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                <path d="M4.5 2.6v10.8c0 .6.6.9 1.1.6l8.4-5.4a.7.7 0 000-1.2L5.6 2c-.5-.3-1.1 0-1.1.6z" fill="currentColor" />
-              </svg>
+              <>
+                <button
+                  type="button"
+                  className="hero-btn hero-mute"
+                  aria-label={muted ? "Unmute intro video" : "Mute intro video"}
+                  aria-pressed={muted}
+                  onClick={toggleMute}
+                >
+                  <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true">
+                    <path d="M2 6h2.6L8 3v10L4.6 10H2z" fill="currentColor" />
+                    {muted ? (
+                      <path d="M10.5 6l3.5 4M14 6l-3.5 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+                    ) : (
+                      <path d="M10.4 5.6a3.4 3.4 0 010 4.8M12.3 3.8a6 6 0 010 8.4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" fill="none" />
+                    )}
+                  </svg>
+                </button>
+                <button
+                  type="button"
+                  className="hero-btn hero-play"
+                  aria-label={paused ? "Play intro video" : "Pause intro video"}
+                  onClick={togglePlay}
+                >
+                  {paused ? (
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                      <path d="M4.5 2.6v10.8c0 .6.6.9 1.1.6l8.4-5.4a.7.7 0 000-1.2L5.6 2c-.5-.3-1.1 0-1.1.6z" fill="currentColor" />
+                    </svg>
+                  ) : (
+                    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                      <rect x="3" y="2.5" width="3.2" height="11" rx="1" fill="currentColor" />
+                      <rect x="9.8" y="2.5" width="3.2" height="11" rx="1" fill="currentColor" />
+                    </svg>
+                  )}
+                </button>
+              </>
             )}
-          </button>
+          </div>
         </div>
       </div>
 
@@ -201,10 +246,14 @@ export default function Hero() {
         .hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:22px}
         .hero-roles{list-style:none;margin:0;padding:0;text-align:right;font-size:15px;line-height:1.75;color:var(--ink-2)}
         .hero-roles span{margin-right:10px;font-family:var(--font-mono);font-size:11px;color:var(--mute)}
-        .hero-sound{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;transition:transform .5s var(--ease),background-color .4s var(--ease)}
-        .hero-sound:hover{transform:translateY(-2px) scale(1.04);background:#262626}
-        .hero-sound.is-blocked::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:0 0 0 1.5px var(--ink);animation:heroPing 1.8s var(--ease) infinite}
-        @keyframes heroPing{from{transform:scale(1);opacity:.55}to{transform:scale(1.9);opacity:0}}
+        .hero-ctrl{display:flex;gap:10px}
+        .hero-btn{position:relative;display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--ink);color:#fff;transition:transform .5s var(--ease),background-color .4s var(--ease)}
+        .hero-btn:hover{transform:translateY(-2px) scale(1.04);background:#262626}
+        .hero-mute{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--ink)}
+        .hero-mute:hover{background:#fff}
+        .hero-tap{grid-auto-flow:column;gap:8px;width:auto;padding:0 18px 0 15px;border-radius:999px;font-size:13.5px;font-weight:500;white-space:nowrap}
+        .hero-tap::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:0 0 0 1.5px var(--ink);animation:heroPing 1.8s var(--ease) infinite}
+        @keyframes heroPing{from{transform:scale(1);opacity:.55}to{transform:scale(1.15,1.5);opacity:0}}
 
         @media (max-width: 1099px){
           .hero{justify-content:flex-start;padding-top:72px}

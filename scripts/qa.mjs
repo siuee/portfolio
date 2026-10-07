@@ -99,16 +99,24 @@ for (const vp of [
   }
 
   if (vp.name === "desktop") {
-    // sound toggle
-    const btn = page.locator(".hero-sound");
+    // mute + play/pause controls
+    const vidState = () => page.evaluate(() => { const v = document.querySelector("video"); return { paused: v.paused, muted: v.muted }; });
     await page.evaluate(() => window.scrollTo(0, 0));
     await page.waitForTimeout(600);
-    const before = await btn.getAttribute("aria-pressed");
+    check("desktop: intro starts with sound", (await vidState()).muted === false);
+    const mute = page.locator(".hero-mute");
+    await mute.click();
+    await page.waitForTimeout(200);
+    const m1 = await vidState();
+    await mute.click();
+    await page.waitForTimeout(200);
+    const m2 = await vidState();
+    check("desktop: mute button toggles sound only", m1.muted && !m1.paused && !m2.muted && !m2.paused, JSON.stringify({ m1, m2 }));
+    const btn = page.locator(".hero-play");
     await btn.click();
-    const after = await btn.getAttribute("aria-pressed");
     await page.waitForTimeout(300);
-    const paused = await page.evaluate(() => document.querySelector("video").paused);
-    check("desktop: pause button stops the video", before === "true" && after === "false" && paused, `${before} → ${after}, paused=${paused}`);
+    const paused = (await vidState()).paused;
+    check("desktop: pause button stops the video", paused);
     // stays paused after scrolling away and back
     await page.evaluate(() => window.scrollTo(0, window.innerHeight * 1.5));
     await page.waitForTimeout(500);
