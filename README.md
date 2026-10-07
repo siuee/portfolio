@@ -23,6 +23,19 @@ Optional checks (they need a local Chrome at `/usr/bin/google-chrome`, or set `C
 npm run build && node scripts/qa.mjs --serve   # screenshots + behaviour checks → ./screenshots
 ```
 
+## Deploy on Vercel
+
+1. Push this repo to GitHub, then go to [vercel.com/new](https://vercel.com/new) and import `siuee/portfolio`.
+   Vercel detects Next.js; keep the default build settings.
+2. In the project dashboard, open **Analytics** → *Enable*, then **Speed Insights** → *Enable*.
+   The code already includes `<Analytics />` and `<SpeedInsights />` from `@vercel/analytics` and
+   `@vercel/speed-insights` in `src/app/layout.tsx`. On Vercel their scripts are served from your own
+   domain (`/_vercel/…`); locally they do nothing.
+3. Optional: set `NEXT_PUBLIC_SITE_URL` (e.g. `https://your-domain.com`) if you add a custom domain.
+   Otherwise OG image URLs use Vercel's production URL.
+
+After that, every push to `main` deploys to production and every other branch gets a preview URL.
+
 ## Sections
 
 | # | Section | Component | Signature motion |
